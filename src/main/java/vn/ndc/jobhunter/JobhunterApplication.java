@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter;
+package vn.ndc.jobhunter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
