@@ -1,4 +1,4 @@
-package vn.ndc.jobhunter.service.error;
+package vn.ndc.jobhunter.util.error;
 
 public class IdInvalidException extends Exception{
     public IdInvalidException(String message) {
