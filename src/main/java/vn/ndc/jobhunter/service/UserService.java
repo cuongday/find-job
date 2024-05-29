@@ -38,7 +38,7 @@ public class UserService {
     public ResultPaginationDTO handleGetUser(Specification<User> userSpec, Pageable pageable) {
         Page<User> pageUser = this.userRepository.findAll(userSpec, pageable);
         ResultPaginationDTO rs = new ResultPaginationDTO();
-        Meta meta = new Meta();
+        ResultPaginationDTO.Meta meta = new ResultPaginationDTO.Meta();
 
         meta.setPage(pageable.getPageNumber() + 1);
         meta.setPageSize(pageable.getPageSize());

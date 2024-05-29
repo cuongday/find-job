@@ -5,11 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.ndc.jobhunter.domain.Company;
-import vn.ndc.jobhunter.domain.dto.Meta;
 import vn.ndc.jobhunter.domain.dto.ResultPaginationDTO;
 import vn.ndc.jobhunter.repository.CompanyRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,7 +24,8 @@ public class CompanySerice {
     public ResultPaginationDTO handleGetCompany(Specification<Company> companySpec, Pageable pageable) {
         Page<Company> pageCompany = this.companyRepository.findAll(companySpec, pageable);
         ResultPaginationDTO rs = new ResultPaginationDTO();
-        Meta meta = new Meta();
+        ResultPaginationDTO.Meta meta = new ResultPaginationDTO.Meta();
+
         meta.setPage(pageable.getPageNumber() + 1);
         meta.setPageSize(pageable.getPageSize());
         meta.setTotal(pageCompany.getTotalPages());
