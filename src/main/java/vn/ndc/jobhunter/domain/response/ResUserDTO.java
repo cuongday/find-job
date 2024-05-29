@@ -1,4 +1,4 @@
-package vn.ndc.jobhunter.domain.dto;
+package vn.ndc.jobhunter.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,12 +14,13 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class ResCreateUserDTO {
+public class ResUserDTO {
     Long id;
-    String name;
     String email;
+    String name;
     GenderEnum gender;
     String address;
     int age;
+    Instant updatedAt;
     Instant createdAt;
 }

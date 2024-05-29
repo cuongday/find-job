@@ -1,4 +1,4 @@
-package vn.ndc.jobhunter.domain.dto;
+package vn.ndc.jobhunter.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

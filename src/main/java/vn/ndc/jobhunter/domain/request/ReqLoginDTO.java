@@ -1,4 +1,4 @@
-package vn.ndc.jobhunter.domain.dto;
+package vn.ndc.jobhunter.domain.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
