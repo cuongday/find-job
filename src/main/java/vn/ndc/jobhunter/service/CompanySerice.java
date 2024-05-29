@@ -45,16 +45,17 @@ public class CompanySerice {
         return null;
     }
 
-    public Company handleUpdateCompany(Long id, Company company){
-        Company companyUpdate = this.fetchCompanyById(id);
-        if (companyUpdate!=null) {
+    public Company handleUpdateCompany(Company company){
+        Optional<Company> companyOptional = this.companyRepository.findById(company.getId());
+        if (companyOptional.isPresent()) {
+            Company companyUpdate = companyOptional.get();
             companyUpdate.setName(company.getName());
             companyUpdate.setAddress(company.getAddress());
             companyUpdate.setDescription(company.getDescription());
             companyUpdate.setLogo(company.getLogo());
-            companyUpdate = this.companyRepository.save(companyUpdate);
+            return this.companyRepository.save(companyUpdate);
         }
-        return companyUpdate;
+        return null;
     }
 
     public void handleDeleteCompany(Long id) {

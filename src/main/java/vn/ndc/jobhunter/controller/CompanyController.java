@@ -37,10 +37,10 @@ public class CompanyController {
         return ResponseEntity.ok(rs);
     }
 
-    @PutMapping("/companies/{id}")
+    @PutMapping("/companies")
     @ApiMessage("Update company by id")
-    public ResponseEntity<Company> updateCompany(@PathVariable("id") Long id, @Valid @RequestBody Company company) {
-        Company companyUpdate = this.companySerice.handleUpdateCompany(id, company);
+    public ResponseEntity<Company> updateCompany(@Valid @RequestBody Company company) {
+        Company companyUpdate = this.companySerice.handleUpdateCompany(company);
         return ResponseEntity.ok(companyUpdate);
     }
 

@@ -66,7 +66,6 @@ public class UserService {
 
     public User handleUpdateUser(User user) {
         User userUpdate = this.fetchUserById(user.getId());
-
         if (userUpdate!=null) {
             userUpdate.setAddress(user.getAddress());
             userUpdate.setGender(user.getGender());
@@ -119,5 +118,17 @@ public class UserService {
         resUserDTO.setGender(user.getGender());
         resUserDTO.setAddress(user.getAddress());
         return resUserDTO;
+    }
+
+    public void updateUserToken(String token, String email){
+        User currentUser = this.handleGetUserByUserName(email);
+        if(currentUser != null){
+            currentUser.setRefreshToken(token);
+            this.userRepository.save(currentUser);
+        }
+    }
+
+    public User getUserByRefreshTokenAndEmail(String token, String email){
+        return this.userRepository.findByRefreshTokenAndEmail(token, email);
     }
 }

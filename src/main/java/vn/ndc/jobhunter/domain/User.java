@@ -38,6 +38,7 @@ public class User  {
     @Enumerated(EnumType.STRING)
     GenderEnum gender;
     String address;
+    @Column(columnDefinition = "MEDIUMTEXT")
     String refreshToken;
     Instant createdAt;
     Instant updatedAt;
