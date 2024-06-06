@@ -1,46 +1,51 @@
 package vn.ndc.jobhunter.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import vn.ndc.jobhunter.util.SecurityUtil;
+import vn.ndc.jobhunter.util.constant.LevelEnum;
 
 import java.time.Instant;
 import java.util.List;
 
 @Entity
-@Table(name = "Companies")
-@Getter
+@Table(name = "jobs")
 @Setter
-public class Company {
+@Getter
+public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @NotBlank(message = "name không được để trống")
     private String name;
+    private String location;
+    private double salary;
+    private LevelEnum level;
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
-    private String address;
-    private String logo;
-
-    private String createdBy;
+    private Instant startDate;
+    private Instant endDate;
+    private boolean active;
     private Instant createdAt;
     private Instant updatedAt;
     private String updatedBy;
+    private String createdBy;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<User> users;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"jobs"})
     @JsonIgnore
-    List<Job> jobs;
+    @JoinTable(name = "job_skills",
+            joinColumns = @JoinColumn(name = "job_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    private List<Skill> skills;
 
 
     @PrePersist
@@ -58,5 +63,4 @@ public class Company {
                 ? SecurityUtil.getCurrentUserLogin().get()
                 : "";
     }
-
 }

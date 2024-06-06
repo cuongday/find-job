@@ -1,6 +1,5 @@
 package vn.ndc.jobhunter.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,10 +11,10 @@ import java.time.Instant;
 import java.util.List;
 
 @Entity
-@Table(name = "Companies")
+@Table(name = "skills")
 @Getter
 @Setter
-public class Company {
+public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,25 +22,14 @@ public class Company {
     @NotBlank(message = "name không được để trống")
     private String name;
 
-    @Column(columnDefinition = "MEDIUMTEXT")
-    private String description;
-
-    private String address;
-    private String logo;
-
-    private String createdBy;
     private Instant createdAt;
     private Instant updatedAt;
+    private String createdBy;
     private String updatedBy;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "skills")
     @JsonIgnore
-    private List<User> users;
-
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<Job> jobs;
-
+    private List<Job> jobs;
 
     @PrePersist
     public void handleBeforeCreate() {
@@ -58,5 +46,4 @@ public class Company {
                 ? SecurityUtil.getCurrentUserLogin().get()
                 : "";
     }
-
 }

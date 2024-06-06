@@ -45,6 +45,10 @@ public class User  {
     String createdBy;
     String updatedBy;
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    Company company;
+
     @PrePersist
     public void handleBeforeCreate() {
         this.createdAt = Instant.now();
