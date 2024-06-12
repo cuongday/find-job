@@ -3,6 +3,7 @@ package vn.ndc.jobhunter.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import vn.ndc.jobhunter.util.SecurityUtil;
@@ -19,9 +20,13 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotBlank(message = "name không được để trống")
     private String name;
+
+    @NotBlank(message = "location không được để trống")
     private String location;
     private double salary;
+    private int quantity;
     private LevelEnum level;
 
     @Column(columnDefinition = "MEDIUMTEXT")
@@ -41,7 +46,6 @@ public class Job {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"jobs"})
-    @JsonIgnore
     @JoinTable(name = "job_skills",
             joinColumns = @JoinColumn(name = "job_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id"))

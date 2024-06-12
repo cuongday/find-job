@@ -9,6 +9,7 @@ import vn.ndc.jobhunter.domain.Skill;
 import vn.ndc.jobhunter.domain.response.ResultPaginationDTO;
 import vn.ndc.jobhunter.repository.SkillRepository;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -49,5 +50,14 @@ public class SkillService {
         rs.setMeta(meta);
         rs.setResult(pageSkill.getContent());
         return rs;
+    }
+
+    public void handleDeleteSkill(long id){
+        //delete job
+        Optional<Skill> skillOptional = this.skillRepository.findById(id);
+        Skill currentSkill = skillOptional.get();
+        currentSkill.getJobs().forEach((job) -> job.getSkills().remove(currentSkill));
+
+        this.skillRepository.delete(currentSkill);
     }
 }

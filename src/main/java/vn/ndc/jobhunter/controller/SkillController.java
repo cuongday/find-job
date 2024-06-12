@@ -53,4 +53,15 @@ public class SkillController {
                                                             Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(this.skillService.handleGetSkill(spec, pageable));
     }
+
+    @DeleteMapping("/skills/{id}")
+    @ApiMessage("Delete a skill")
+    public ResponseEntity<Void> deleteSkill(@PathVariable Long id) throws IdInvalidException {
+        Skill skill = this.skillService.fetchSkillById(id);
+        if (skill == null) {
+            throw new IdInvalidException("Skill id = " + id + " không tồn tại");
+        }
+        this.skillService.handleDeleteSkill(id);
+        return ResponseEntity.ok().body(null);
+    }
 }
