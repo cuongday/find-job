@@ -12,6 +12,8 @@ import vn.ndc.jobhunter.domain.response.ResultPaginationDTO;
 import vn.ndc.jobhunter.service.CompanySerice;
 import vn.ndc.jobhunter.util.annotation.ApiMessage;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1")
 public class CompanyController {
@@ -49,5 +51,12 @@ public class CompanyController {
     public ResponseEntity<Void> deleteCompany(@PathVariable("id") Long id) {
         this.companySerice.handleDeleteCompany(id);
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/companies/{id}")
+    @ApiMessage("Fetch company by id")
+    public ResponseEntity<Company> fetchCompanyById(@PathVariable("id") Long id) {
+        Company company = this.companySerice.fetchCompanyById(id);
+        return ResponseEntity.ok(company);
     }
 }

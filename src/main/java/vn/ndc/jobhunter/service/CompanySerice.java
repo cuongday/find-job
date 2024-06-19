@@ -38,7 +38,7 @@ public class CompanySerice {
         return rs;
     }
 
-    public Company fetchCompanyById(Long id) {
+    public Company fetchCompanyById(long id) {
         Optional<Company> companyOptional = this.companyRepository.findById(id);
         if (companyOptional.isPresent()) {
             return companyOptional.get();
