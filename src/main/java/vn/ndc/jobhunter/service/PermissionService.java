@@ -1,6 +1,5 @@
 package vn.ndc.jobhunter.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,10 +8,7 @@ import org.springframework.stereotype.Service;
 import vn.ndc.jobhunter.domain.Permission;
 import vn.ndc.jobhunter.domain.response.ResultPaginationDTO;
 import vn.ndc.jobhunter.repository.PermissionRepository;
-
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -75,5 +71,15 @@ public class PermissionService {
         Permission currentPermission = permissionOptional.get();
         currentPermission.getRoles().forEach((role) -> role.getPermissions().remove(currentPermission));
         this.permissionRepository.delete(currentPermission);
+    }
+
+    public boolean isSameName(Permission permission) {
+        Permission permissionDB = this.fetchById(permission.getId());
+        if(permissionDB != null){
+            if(permissionDB.getName().equals(permission.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -41,7 +41,9 @@ public class PermissionController {
         }
 
         if(this.permissionService.isPermissionExist(permission)) {
-            throw new IdInvalidException("Permission đã tồn tại");
+            if(this.permissionService.isSameName(permission)) {
+                throw new IdInvalidException("Permission đã tồn tại");
+            }
         }
 
         return ResponseEntity.status(HttpStatus.OK)
